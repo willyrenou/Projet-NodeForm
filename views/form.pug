@@ -1,0 +1,57 @@
+extends layout
+
+block content
+	-data = data || {}
+	if errors
+		ul.my-errors
+			for error in errors
+				li= error.msg
+	form(action="." method="POST" class="form-node-form")
+		label(for="name") Vos nom et prénom :
+		input(
+			type="text"
+			id="name"
+			name="name"
+			placeholder="ex. : RENOU Willy"
+			class="form-control"
+			value=data.name
+		)
+		label(for="email") Votre email :
+		input(
+			type="email"
+			id="email"
+			name="email"
+			placeholder="ex. : w.renou@hotmail.fr"
+			class="form-control"
+			value=data.email
+		)
+		label(for="objet") Objet de votre message :
+		input(
+			type="text"
+			id="objet"
+			name="objet"
+			placeholder="Saisissez l'objet..."
+			class="form-control"
+			value=data.objet
+		)
+		label(for="message") Votre message :
+		textarea.form-control(
+			type="text"
+			id="message"
+			name="message"
+			rows="3"
+			placeholder="Rédigez votre message..."
+			class="form-control"
+			value=data.message
+		)
+		input(
+			type="submit"
+			value="Envoyez >>"
+			class="btn btn-lg btn-primary btn-block"
+		)
+		input(
+			type="button"
+			value="Ils nous ont déjà écrit >>"
+			class="btn btn-lg btn-primary btn-block"
+			onclick="window.location.href='./list'"
+		)
