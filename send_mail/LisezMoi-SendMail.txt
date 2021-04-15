@@ -1,0 +1,90 @@
+https://stackabuse.com/how-to-send-emails-with-node-js/
+
+> npm i -y
+> npm i nodemailer
+
+------------------
+Inbox, credentials
+------------------
+SMTP
+Host: smtp.mailtrap.io
+Port: 25 or 465 or 587 or 2525
+Username: 39be6769895276
+Password: e34190c4ce154b
+Auth: PLAIN, LOGIN and CRAM-MD5
+TLS: Optional (STARTTLS on all ports)
+
+
+POP3
+Host: pop3.mailtrap.io
+Port: 1100 or 9950
+Username: 39be6769895276
+Password: e34190c4ce154b
+Auth: USER/PASS, PLAIN, LOGIN, APOP and CRAM-MD5
+TLS: Optional (STARTTLS on all ports)
+
+
+var transport = nodemailer.createTransport({
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "39be6769895276",
+    pass: "e34190c4ce154b"
+  }
+});
+
+--------
+index.js
+--------
+const nodemailer = require('nodemailer');
+
+/* Creating a nodemailer transport:
+let transport = nodemailer.createTransport(options[, defaults])
+
+Send message through our transport ==> configure the connection first
+
+Mailtrap is a "fake SMTP server" used for development purposes.
+Instead of having to test your code with your own email account,
+and potentially flooding your inbox with test emails,
+you can instead use Mailtrap as the endpoint.
+So:
+Create a new account on Mailtrap if you don't already have one,
+and then create a new inbox and get your credentials:
+Now:
+All we need to do is put the credentials into nodemailer's transport object
+*/
+
+let transport = nodemailer.createTransport({
+  host: 'smtp.mailtrap.io',
+  port: 2525,
+  auth: {
+    user: '39be6769895276',
+    pass: 'e34190c4ce154b'
+  }
+});
+
+/* Go ahead and send email:
+*/
+const message = {
+  from: 'esenaya@yahoo.fr',
+  to: 'ericsenaya@gmail.com',         // List of recipients
+  subject: '[02M1I20201933] - NodeJS',
+  text: 'Enjoy with Nodemailer!' // Plain text body
+};
+transport.sendMail(message, function(err, info) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(info);
+  }
+});
+
+---------------------
+Sending an HTML Email
+---------------------
+const message = {
+  from: 'esenaya@yahoo.fr',
+  to: 'ericsenaya@gmail.com',         // List of recipients
+  subject: '[02M1I20201933] - NodeJS',
+  html: '<h1>Enjoy with Nodemailer!</h1><p>Get your <b>Tesla</b> today!</p>'
+};
